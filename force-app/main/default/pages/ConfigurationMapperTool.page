@@ -1,0 +1,195 @@
+<apex:page standardController="Configuration_Mapper__c" extensions="ConfigurationMapperToolExtension" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <title>Configuration Mapper Tool</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css" />
+        <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+        <style>
+                ul.ui-autocomplete {
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    z-index: 1000;
+                    float: left;
+                    display: none;
+                    min-width: 160px;
+                    margin: 0 0 10px 25px;
+                    list-style: none;
+                    background-color: #f2f2f2;
+                    border: 1px solid #ccc;
+                    border-color: rgba(0, 0, 0, 0.2);
+                    //@include border-radius(5px);
+                    @include box-shadow( rgba(0, 0, 0, 0.1) 0 5px 10px );
+                    @include background-clip(padding-box);
+                    *border-right-width: 2px;
+                    *border-bottom-width: 2px;
+                    font-family: "Arial", Times, serif;
+
+                    li.ui-menu-item{
+                        padding:0 .5em;
+                        line-height:2em;
+                        font-size:.8em;
+                        .ui-state-focus{
+                            background: #f2f2f2;
+                        }
+                    }
+                }
+
+            </style>
+
+        <apex:slds />
+    </head>
+
+    <body>
+    <div class="slds-scope">
+        <div class="slds-page-header">
+            <div class="slds-media">
+                <div class="slds-media__figure">
+                      <span class="slds-icon_container slds-icon-standard-account">
+                        <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#task')}" />
+                        </svg>
+                      </span>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-page-header__title slds-truncate slds-align-middle">CMT</h1>
+                    <p class="slds-text-body_small slds-line-height_reset">Configuration Mapper Tool</p>
+                </div>
+                <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                    <div class="slds-button-group" role="group">
+                        <a href="#" class="slds-button slds-button_brand saveMapping">Save</a>
+                        <apex:form >
+                            <!-- <apex:commandButton action="{!redirectToList}" value="Exit" styleClass="slds-button slds-button_neutral"/> -->
+                        </apex:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="slds-p-horizontal--medium slds-size--1-of-1">
+            <div class="slds-grid">
+                <div class="slds-panel" style="width: 100%">
+                    <div class="slds-form slds-grow">
+                        <div class="slds-panel__section">
+                            <apex:form >
+
+                                <article class="slds-card">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__body">
+                                                <h2>
+                                                    <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="[object Object]">
+                                                        <span class="slds-text-heading_small"> Configuration Mapper Options <br/><small></small></span>
+                                                    </a>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                    </div>
+                                    <div class="slds-card__body slds-card__body_inner">
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <div class="slds-form" role="list">
+                                                <div class="slds-grid slds-gutters_small">
+                                                    <div class="slds-col slds-has-flexi-truncate" role="listitem">
+                                                        <div class="slds-form-element slds-form-element_edit slds-hint-parent">
+                                                            <span class="slds-form-element__label">Configuration Mapper Name</span>
+                                                            <div class="slds-form-element__control">
+                                                                        <span class="slds-form-element__static">
+                                                                            <span class="slds-media slds-media_small">
+                                                                                <input type="text" class="slds-input slds-combobox__input trakername" id="Mapping_name" aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" />
+                                                                            </span>
+                                                                        </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                </div>
+                                                <div class="slds-grid slds-gutters_small">
+                                                    <div class="slds-col slds-has-flexi-truncate" role="listitem">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="combobox-unique-id-2">Result Query</label>
+                                                            <div class="slds-form-element__control">
+                                                                <div class="slds-combobox_container">
+                                                                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                                                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                                                            <textarea  class="slds-textarea" id="master_query" rows="4"/>
+                                                                        </div>
+                                                                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                               
+                                                <div class="slds-grid slds-gutters_small">
+                                                    <div class="slds-col slds-has-flexi-truncate" role="listitem">
+                                                        <div class="slds-form-element slds-form-element_edit slds-hint-parent">
+                                                            <span class="slds-form-element__label"></span>
+                                                            <div class="slds-form-element__control">
+                                                                        <span class="slds-form-element__static">
+                                                                            <span class="slds-media slds-media_small">
+                                                                                <span class="slds-checkbox slds-checkbox_stacked">
+                                                                                    <input type="checkbox" id="isActive" value="checkbox-20" disabled=""  checked="true" />
+                                                                                    <label class="slds-checkbox__label" for="isActive">
+                                                                                        <span class="slds-checkbox_faux"></span>
+                                                                                        <span class="slds-form-element__label">Active</span>
+                                                                                    </label>
+                                                                                </span>
+                                                                            </span>
+                                                                        </span>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+
+                                <br/>
+
+                                <article class="slds-card">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__body">
+                                                <h2>
+                                                    <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="[object Object]">
+                                                        <span class="slds-text-heading_small">Field Mapping <br/><small> Fields are populated from Object definitions</small></span>
+                                                    </a>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                    </div>
+                                    <div class="slds-card__body slds-card__body_inner">
+                                        <fieldset class="slds-form-element">
+                                            <div class="slds-form-element__group input_fields_wrap">
+            
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <footer class="slds-card__footer"></footer>
+                                </article>
+                            </apex:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"/>
+    <script src="https://www.eyecon.ro/bootstrap-tabdrop/js/bootstrap-tabdrop.js"></script>
+    </html>
+</apex:page>
